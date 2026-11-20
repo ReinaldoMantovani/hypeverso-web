@@ -1,0 +1,73 @@
+@import "tailwindcss";
+:root{--background:#05030b;--foreground:#f7f4ff;--muted:#a9a3b8;--neon:#8b5cf6;--cyan:#22d3ee}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(91,33,182,.19),transparent 35%),radial-gradient(circle at 80% 10%,rgba(8,145,178,.12),transparent 28%),#05030b;color:var(--foreground);font-family:Arial,Helvetica,sans-serif;min-height:100vh}.grid-bg{background-image:linear-gradient(rgba(139,92,246,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.055) 1px,transparent 1px);background-size:44px 44px}.glass{background:rgba(12,8,24,.68);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.08)}.neon-text{text-shadow:0 0 28px rgba(139,92,246,.45)}.prose-nv{line-height:1.8;color:#ddd6fe}.prose-nv h1,.prose-nv h2,.prose-nv h3{color:#fff;margin:1.5em 0 .5em}.prose-nv p{margin:1em 0}.prose-nv img{border-radius:1rem;max-width:100%}.prose-nv a{color:#67e8f9}.prose-nv figure{margin:2rem 0}.prose-nv figure img{width:100%;max-height:560px;object-fit:cover}.prose-nv figcaption{margin-top:.6rem;font-size:.78rem;line-height:1.5;color:rgba(255,255,255,.4)}.prose-nv ul,.prose-nv ol{padding-left:1.4rem;margin:1rem 0}.prose-nv li{margin:.35rem 0}.tiptap{min-height:360px;outline:none}.tiptap p{margin:.6rem 0}.tiptap h2{font-size:1.5rem;font-weight:700;margin:1rem 0}
+
+/* CMS rich editor */
+.nexverse-rich-editor .ProseMirror{min-height:560px;outline:none;padding:1.25rem 1.35rem 4rem;line-height:1.8;color:#f1ecff}
+.nexverse-rich-editor .ProseMirror p{margin:.8rem 0}
+.nexverse-rich-editor .ProseMirror h2{margin:1.55rem 0 .65rem;font-size:1.6rem;line-height:1.25;font-weight:800;color:#fff}
+.nexverse-rich-editor .ProseMirror h3{margin:1.3rem 0 .55rem;font-size:1.25rem;line-height:1.35;font-weight:750;color:#fff}
+.nexverse-rich-editor .ProseMirror ul,.nexverse-rich-editor .ProseMirror ol{margin:.85rem 0;padding-left:1.65rem}
+.nexverse-rich-editor .ProseMirror ul{list-style:disc}
+.nexverse-rich-editor .ProseMirror ol{list-style:decimal}
+.nexverse-rich-editor .ProseMirror li{margin:.35rem 0}
+.nexverse-rich-editor .ProseMirror blockquote{margin:1.2rem 0;border-left:3px solid rgba(139,92,246,.75);background:rgba(139,92,246,.07);padding:.7rem 1rem;color:#ddd6fe}
+.nexverse-rich-editor .ProseMirror a{color:#67e8f9;text-decoration:underline;text-underline-offset:3px}
+.nexverse-rich-editor .ProseMirror img{display:block;width:auto;max-width:100%;max-height:720px;margin:1.4rem auto;border-radius:1rem;object-fit:contain;box-shadow:0 14px 40px rgba(0,0,0,.28)}
+.nexverse-rich-editor .ProseMirror img.ProseMirror-selectednode{outline:2px solid #8b5cf6;outline-offset:3px}
+.nexverse-rich-editor .ProseMirror p.is-editor-empty:first-child::before{content:attr(data-placeholder);float:left;height:0;color:rgba(255,255,255,.3);pointer-events:none}
+@media (max-width:1023px){.nexverse-rich-editor .ProseMirror{min-height:480px;padding:1rem 1rem 4rem}}
+
+/* Hypeverso responsive hardening */
+html,body{max-width:100%;overflow-x:hidden}
+@media (max-width:1279px){.admin-ai-grid select,.admin-ai-grid input{min-width:0}}
+
+/* ---- Spoilers (editor, comentários, threads, reviews) ---- */
+.spoiler {
+  border-radius: 0.35rem;
+  background: rgba(139, 92, 246, 0.18);
+  filter: blur(6px);
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  user-select: none;
+}
+.spoiler:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+}
+.spoiler.revealed {
+  filter: none;
+  cursor: auto;
+  user-select: text;
+  background: rgba(139, 92, 246, 0.1);
+}
+
+/* ---- Modo leitura ---- */
+.prose-nv {
+  font-size: calc(1em * var(--reading-scale, 1));
+}
+[data-reading-mode] header,
+[data-reading-mode] footer,
+[data-reading-mode] .reading-hide,
+[data-reading-mode] aside[aria-label='Publicidade'] {
+  display: none !important;
+}
+[data-reading-mode] .reading-article {
+  max-width: 44rem;
+}
+[data-reading-mode] .prose-nv {
+  font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.86);
+}
+.prose-nv h2,
+.prose-nv h3 {
+  scroll-margin-top: 5.5rem;
+}
+/* No editor o spoiler fica visível, apenas sinalizado. */
+.ProseMirror .spoiler {
+  filter: none;
+  cursor: text;
+  user-select: text;
+  text-decoration: underline dotted rgba(167, 139, 250, 0.8);
+}

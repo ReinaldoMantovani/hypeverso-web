@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+coverage
+.expo
+package-lock.json
+**/migrations/**/*.sql
+apps/web/next-env.d.ts
+apps/web/tsconfig.tsbuildinfo
+*.md

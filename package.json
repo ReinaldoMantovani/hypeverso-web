@@ -1,0 +1,53 @@
+{
+  "name": "hypeverso-web",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Site público do Hypeverso (Next.js) — pronto para Node.js Web App da Hostinger.",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "build:webpack": "next build --webpack",
+    "start": "next start",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,tsx,mjs,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mjs,json}\""
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@tanstack/react-query": "^5.87.1",
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.542.0",
+    "next": "16.3.3",
+    "postcss": "^8.5.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "sharp": "0.35.4",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.55.0",
+    "@testing-library/react": "^16.3.0",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^16.5.0",
+    "jsdom": "^26.1.0",
+    "prettier": "^3.9.10",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
