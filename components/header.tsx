@@ -2,7 +2,8 @@
 import { assetUrl } from '@/lib/asset-url';
 import Link from 'next/link';
 import { Search, Menu, X, UserCircle, Shield, LogOut, Bookmark, Lock } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/ui';
 import { Logo } from './logo';
 import { useAuth } from '@/stores/auth';
@@ -17,6 +18,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const { t } = useI18n();
+  const pathname = usePathname();
+  // Fecha o menu ao trocar de página.
+  useEffect(() => setOpen(false), [pathname]);
+  const isStaff = Boolean(CMS_URL && user && ['ADMIN', 'EDITOR', 'MODERATOR'].includes(user.role));
   const links = [
     [t('news'), '/noticias'],
     [t('community'), '/comunidade'],
@@ -38,8 +43,11 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-1 sm:gap-2">
-          <LanguageSwitcher />
+        <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
+          {/* No celular o idioma fica dentro do menu (☰). */}
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
           <Link href="/buscar" aria-label={t('search')} className="rounded-xl p-2 hover:bg-white/10">
             <Search size={19} />
           </Link>
@@ -72,8 +80,8 @@ export function Header() {
               >
                 <Lock size={18} />
               </Link>
-              {CMS_URL && ['ADMIN', 'EDITOR', 'MODERATOR'].includes(user.role) && (
-                <a href={CMS_URL} className="rounded-xl p-2 hover:bg-white/10" title={t('admin')}>
+              {isStaff && (
+                <a href={CMS_URL} className="hidden rounded-xl p-2 hover:bg-white/10 sm:block" title={t('admin')}>
                   <Shield size={18} />
                 </a>
               )}
@@ -81,8 +89,9 @@ export function Header() {
                 onClick={() => {
                   void logout().catch(() => undefined);
                 }}
-                className="rounded-xl p-2 hover:bg-white/10"
+                className="hidden rounded-xl p-2 hover:bg-white/10 sm:block"
                 title={t('logout')}
+                aria-label={t('logout')}
               >
                 <LogOut size={18} />
               </button>
@@ -92,23 +101,75 @@ export function Header() {
               <Button>{t('login')}</Button>
             </Link>
           )}
-          <button className="xl:hidden" onClick={() => setOpen(!open)}>
-            {open ? <X /> : <Menu />}
+          <button
+            type="button"
+            className="shrink-0 rounded-xl p-2 hover:bg-white/10 xl:hidden"
+            onClick={() => setOpen(!open)}
+            aria-label={t('menu')}
+            aria-expanded={open}
+            aria-controls="menu-principal"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
       {open && (
-        <nav className="border-t border-white/10 p-4 xl:hidden">
+        <nav
+          id="menu-principal"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 p-4 xl:hidden"
+        >
           {links.map(([a, b]) => (
             <Link
               onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-3 hover:bg-white/5"
+              className={`block rounded-lg px-3 py-3 hover:bg-white/5 ${pathname === b ? 'bg-white/5 text-white' : 'text-white/80'}`}
               key={b}
               href={b}
             >
               {a}
             </Link>
           ))}
+
+          <div className="my-3 border-t border-white/10" />
+
+          {user ? (
+            <div className="space-y-1 sm:hidden">
+              <Link href={`/u/${user.username}`} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white/5">
+                {user.avatarUrl ? (
+                  <img src={assetUrl(user.avatarUrl)} alt="" className="h-6 w-6 rounded-full object-cover" />
+                ) : (
+                  <UserCircle size={18} />
+                )}
+                {t('myProfile')}
+              </Link>
+              <Link href="/favoritos" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white/5">
+                <Bookmark size={18} /> {t('favorites')}
+              </Link>
+              <Link href="/conta/privacidade" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white/5">
+                <Lock size={18} /> {t('privacyCenter')}
+              </Link>
+              {isStaff && (
+                <a href={CMS_URL} className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white/5">
+                  <Shield size={18} /> {t('admin')}
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  void logout().catch(() => undefined);
+                }}
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-rose-300 hover:bg-white/5"
+              >
+                <LogOut size={18} /> {t('logout')}
+              </button>
+            </div>
+          ) : null}
+
+          {/* Idioma: no celular só aparece aqui. */}
+          <div className="mt-2 flex items-center justify-between gap-3 rounded-lg px-3 py-2 md:hidden">
+            <span className="text-sm text-white/70">{t('language')}</span>
+            <LanguageSwitcher />
+          </div>
         </nav>
       )}
     </header>
