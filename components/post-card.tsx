@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { Bookmark, MessageCircle } from 'lucide-react';
 import { Card } from '@/ui';
 import { formatDate } from '@/lib/utils';
+import { postPath } from '@/lib/content-locale';
 export function PostCard({ post }: { post: any }) {
   return (
     <Card className="group overflow-hidden">
-      <Link href={`/post/${post.slug}`}>
+      {/* Já traduzido (lista pedida em outro idioma): vai direto para /en/post/... */}
+      <Link href={postPath(post.slug, post.translation?.translated ? post.translation.locale : null)}>
         <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-violet-950 to-cyan-950">
           {post.coverImageUrl ? (
             <SmartImage
@@ -28,8 +30,8 @@ export function PostCard({ post }: { post: any }) {
               <span className="ml-auto rounded-full bg-violet-500/20 px-2 py-1 text-violet-200">Premium</span>
             )}
           </div>
-          <h3 className="text-lg font-bold leading-snug group-hover:text-violet-200">{post.title}</h3>
-          <p className="mt-2 line-clamp-2 text-sm text-white/55">{post.description}</p>
+          <h3 data-no-i18n className="text-lg font-bold leading-snug group-hover:text-violet-200">{post.title}</h3>
+          <p data-no-i18n className="mt-2 line-clamp-2 text-sm text-white/55">{post.description}</p>
           {post._count && (
             <div className="mt-4 flex gap-4 text-xs text-white/35">
               <span className="flex items-center gap-1">

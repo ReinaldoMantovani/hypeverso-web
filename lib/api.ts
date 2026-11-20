@@ -1,3 +1,4 @@
+import { withContentLocale } from './content-locale';
 // Browser requests use the Next.js same-origin gateway (/api/*). This avoids
 // CORS/preflight problems and prevents transient API container restarts from
 // surfacing as the unhelpful browser error "Failed to fetch".
@@ -148,7 +149,18 @@ function formatError(j: any, status: number) {
   }
 }
 
+function browserLocale() {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem('hypeverso_locale');
+  } catch {
+    return null;
+  }
+}
+
 export async function api<T = any>(path: string, init: RequestInit = {}, retry = true): Promise<T> {
+  // Listas de artigos e da Shop vêm no idioma escolhido (quando já traduzidas).
+  if (!init.method || init.method.toUpperCase() === 'GET') path = withContentLocale(path, browserLocale());
   const headers = new Headers(init.headers);
   if (!(init.body instanceof FormData) && init.body !== undefined) headers.set('Content-Type', 'application/json');
   if (!headers.has('Accept')) headers.set('Accept', 'application/json');
@@ -208,6 +220,15 @@ export async function api<T = any>(path: string, init: RequestInit = {}, retry =
 
 export async function serverApi<T = any>(path: string): Promise<T> {
   const { backendBase, gatewayHeaders } = await import('./backend');
+  // No servidor o idioma vem do cookie hv_locale (definido pelo seletor de idioma).
+  if (!/[?&]locale=/.test(path)) {
+    try {
+      const { cookies } = await import('next/headers');
+      path = withContentLocale(path, (await cookies()).get('hv_locale')?.value);
+    } catch {
+      // fora de uma requisição (build/sitemap): sem idioma
+    }
+  }
   const res = await fetch(`${backendBase()}${path}`, {
     // O segredo do gateway isenta a renderização do servidor do rate limit por IP.
     headers: { Accept: 'application/json', 'Accept-Encoding': 'identity', ...gatewayHeaders() },

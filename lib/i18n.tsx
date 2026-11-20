@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export type Locale = 'pt-BR' | 'en' | 'es';
 const STORAGE_KEY = 'hypeverso_locale';
@@ -693,6 +694,7 @@ function normalizeLocale(value: string | null | undefined): Locale {
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('pt-BR');
+  const router = useRouter();
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     setLocaleState(normalizeLocale(saved || navigator.language));
@@ -701,6 +703,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(next);
     localStorage.setItem(STORAGE_KEY, next);
     document.cookie = `${COOKIE_KEY}=${encodeURIComponent(next)}; path=/; max-age=31536000; SameSite=Lax`;
+    // Recarrega os dados do servidor: listas de artigos e Shop vêm no novo idioma.
+    router.refresh();
   };
   useEffect(() => {
     document.documentElement.lang = locale;

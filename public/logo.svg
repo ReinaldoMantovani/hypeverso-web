@@ -1,10 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Hypeverso">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8b5cf6"/>
-      <stop offset="1" stop-color="#22d3ee"/>
+    <linearGradient id="hv-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset=".55" stop-color="#a21caf"/>
+      <stop offset="1" stop-color="#06b6d4"/>
     </linearGradient>
+    <radialGradient id="hv-glow" cx=".28" cy=".2" r=".85">
+      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+      <stop offset=".6" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="hv-front"><rect x="0" y="262" width="512" height="250"/></clipPath>
   </defs>
-  <rect width="512" height="512" rx="112" fill="url(#g)"/>
-  <path d="M150 120h62v108h88V120h62v272h-62V284h-88v108h-62z" fill="#07050d"/>
+  <rect width="512" height="512" rx="124" fill="url(#hv-bg)"/>
+  <rect width="512" height="512" rx="124" fill="url(#hv-glow)"/>
+  <g transform="rotate(-16 256 262)">
+    <ellipse cx="256" cy="262" rx="200" ry="60" fill="none" stroke="#0b0716" stroke-opacity=".45" stroke-width="22"/>
+  </g>
+  <g fill="#fff">
+    <path d="M170 116h68l-50 280h-68z"/>
+    <path d="M328 116h68l-50 280h-68z"/>
+    <path d="M200 228h146l-11 58H189z"/>
+  </g>
+  <g transform="rotate(-16 256 262)">
+    <ellipse cx="256" cy="262" rx="200" ry="60" fill="none" stroke="#0b0716" stroke-width="22" clip-path="url(#hv-front)"/>
+  </g>
+  <path d="M424 92l10 26 26 10-26 10-10 26-10-26-26-10 26-10z" fill="#fff"/>
+  <circle cx="108" cy="402" r="9" fill="#fff" fill-opacity=".85"/>
 </svg>

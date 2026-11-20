@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Hypeverso',
     locale: 'pt_BR',
-    images: [{ url: '/logo.png', width: 600, height: 600 }],
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Hypeverso' }],
   },
   twitter: { card: 'summary_large_image' },
   alternates: { canonical: '/' },

@@ -10,8 +10,8 @@ export default async function Home() {
   let categories: any[] = [];
   try {
     const [p, c] = await Promise.all([serverApi<any>('/api/posts?limit=8'), serverApi<any[]>('/api/categories')]);
-    posts = p.items;
-    categories = c;
+    posts = Array.isArray(p?.items) ? p.items : [];
+    categories = Array.isArray(c) ? c : [];
   } catch {}
   return (
     <>
