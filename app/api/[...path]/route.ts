@@ -111,7 +111,22 @@ async function forward(request: NextRequest, context: { params: Promise<{ path: 
     }
   }
 
-  const message = lastError instanceof Error ? lastError.message : 'Falha de comunicação com a API';
+  // "fetch failed" sozinho não diz nada: mostra o motivo real (cause) e para onde tentou ir.
+  const cause =
+    lastError instanceof Error && lastError.cause && typeof lastError.cause === 'object'
+      ? (lastError.cause as { code?: string; message?: string })
+      : undefined;
+  const destino = (() => {
+    try {
+      return new URL(backendBase()).origin;
+    } catch {
+      return 'API_INTERNAL_URL inválida';
+    }
+  })();
+  const base = lastError instanceof Error ? lastError.message : 'Falha de comunicação com a API';
+  const detail = cause ? ` (${[cause.code, cause.message].filter(Boolean).join(': ')})` : '';
+  const hint = process.env.API_INTERNAL_URL ? '' : ' — API_INTERNAL_URL não definida no site';
+  const message = `${base}${detail} → ${destino}${hint}`;
   return Response.json(
     {
       error:
