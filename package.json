@@ -5,15 +5,15 @@
   "description": "Site público do Hypeverso (Next.js) — pronto para Node.js Web App da Hostinger.",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
-    "build:webpack": "next build --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,mjs,json}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mjs,json}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,mjs,json}\"",
+    "build:turbopack": "next build"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

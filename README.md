@@ -47,7 +47,7 @@ Planos com Node.js Web App: Business ou Cloud.
    Variáveis `NEXT_PUBLIC_*` entram no build. Se mudar alguma, faça um novo deploy.
 5. Deploy. Teste `https://seudominio.com.br/shop` e `https://seudominio.com.br/api/shop/products`.
 
-Se o build falhar com erro do Turbopack em `globals.css`, troque o comando de build para `npm run build:webpack`. A Hostinger documenta esse contorno para Next.js 16.
+O `npm run build` usa **webpack** (`next build --webpack`) e a configuração fica em `next.config.mjs`. O servidor de build da Hostinger tem uma glibc antiga: o compilador nativo do Next não carrega lá, o Turbopack não funciona e um `next.config.ts` não é lido. Não troque nenhum dos dois.
 
 ## Testes
 
