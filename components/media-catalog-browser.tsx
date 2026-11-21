@@ -9,7 +9,7 @@ import { Button, Card, Input } from '@/ui';
 
 type MediaType = 'MOVIE' | 'SERIES' | 'GAME' | 'ANIME' | 'MANGA' | 'COMIC';
 type CatalogItem = {
-  provider: 'TMDB' | 'IGDB' | 'ANILIST';
+  provider: 'TMDB' | 'IGDB' | 'ANILIST' | 'METRON' | 'GOOGLE_BOOKS';
   externalId: string;
   mediaType: MediaType;
   title: string;
@@ -21,7 +21,10 @@ type CatalogItem = {
   rating?: number | null;
   sourceUrl?: string | null;
 };
-type SearchResponse = { items: CatalogItem[]; providers: { TMDB: boolean; IGDB: boolean; ANILIST: boolean } };
+type SearchResponse = {
+  items: CatalogItem[];
+  providers: { TMDB: boolean; IGDB: boolean; ANILIST: boolean; METRON?: boolean; GOOGLE_BOOKS?: boolean };
+};
 
 const typeLabels: Record<MediaType, string> = {
   MOVIE: 'Filmes',
@@ -31,7 +34,7 @@ const typeLabels: Record<MediaType, string> = {
   MANGA: 'Mangá',
   COMIC: 'HQs',
 };
-const providerLabels = { TMDB: 'TMDB', IGDB: 'IGDB', ANILIST: 'AniList' } as const;
+const providerLabels = { TMDB: 'TMDB', IGDB: 'IGDB', ANILIST: 'AniList', METRON: 'Metron', GOOGLE_BOOKS: 'Google Books' } as const;
 const statusByType: Record<MediaType, { value: string; label: string }[]> = {
   MOVIE: [
     { value: 'WANT_TO_WATCH', label: 'Quero assistir' },
@@ -111,7 +114,9 @@ export function MediaCatalogBrowser({ compact = false }: { compact?: boolean }) 
         ? 'IGDB ainda não foi configurado. Adicione IGDB_CLIENT_ID e IGDB_CLIENT_SECRET para ativar games.'
         : null;
     if (type === 'COMIC')
-      return 'HQs continuam com cadastro manual nesta primeira fase do Media Hub; um provider dedicado será a próxima etapa.';
+      return search.data && !search.data.providers.METRON
+        ? 'HQs nacionais e encadernados vêm do Google Books. Para incluir as séries americanas, configure METRON_USERNAME e METRON_PASSWORD no backend.'
+        : null;
     return null;
   }, [type, search.data]);
 

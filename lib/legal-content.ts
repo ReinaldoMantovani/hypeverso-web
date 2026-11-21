@@ -165,7 +165,7 @@ const pt: Record<LegalKind, LegalDoc> = {
           'Provedores de infraestrutura e hospedagem, banco de dados, e-mail transacional e armazenamento de mídia, sob contrato e obrigação de confidencialidade.',
           'Stripe, para processamento de pagamentos da assinatura Premium.',
           'Google (AdSense e, se ativado, Google Analytics), conforme as suas escolhas de cookies.',
-          'Provedores de catálogo de mídia (TMDB, IGDB, AniList), que recebem apenas os termos de busca de filmes, séries, jogos e animes — nunca seus dados de conta.',
+          'Provedores de catálogo de mídia (TMDB, IGDB, AniList, Metron e Google Books), que recebem apenas os termos de busca de filmes, séries, jogos, animes e HQs — nunca seus dados de conta.',
           'Cloudflare (Turnstile), para verificar que formulários são enviados por pessoas; Google, Mozilla, Apple ou Microsoft, como serviços de push do seu navegador, apenas quando você ativa notificações; e o provedor de e-mail transacional para a newsletter.',
           'Lojas parceiras do programa de afiliados (ex.: Amazon), somente se você clicar em um link de compra: a partir daí vale a política da loja. Registramos apenas a contagem agregada de cliques.',
           'Autoridades públicas, mediante ordem judicial ou requisição legal válida.',
@@ -320,7 +320,7 @@ const pt: Record<LegalKind, LegalDoc> = {
       {
         h: '7. Propriedade intelectual',
         p: [
-          `A marca ${S}, o logotipo, o layout, o código e os textos editoriais pertencem a ${E} ou aos respectivos licenciantes. Imagens de terceiros são usadas com licença compatível (ex.: Creative Commons) ou para fins jornalísticos, com os devidos créditos. Pôsteres, capas e metadados de catálogo pertencem aos seus titulares e são fornecidos por TMDB, IGDB e AniList. Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.`,
+          `A marca ${S}, o logotipo, o layout, o código e os textos editoriais pertencem a ${E} ou aos respectivos licenciantes. Imagens de terceiros são usadas com licença compatível (ex.: Creative Commons) ou para fins jornalísticos, com os devidos créditos. Pôsteres, capas e metadados de catálogo pertencem aos seus titulares e são fornecidos por TMDB, IGDB, AniList, Metron e Google Books. Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.`,
         ],
       },
       {
@@ -508,7 +508,7 @@ const en: Record<LegalKind, LegalDoc> = {
       {
         h: '4. Sharing',
         p: [
-          'We do not sell personal data. We share it only when necessary with hosting/infrastructure and e-mail providers, Stripe (payments), Google (AdSense/Analytics, according to your choices), catalogue providers (TMDB, IGDB, AniList — search terms only), public authorities under a valid legal order, and a successor in case of corporate reorganisation.',
+          'We do not sell personal data. We share it only when necessary with hosting/infrastructure and e-mail providers, Stripe (payments), Google (AdSense/Analytics, according to your choices), catalogue providers (TMDB, IGDB, AniList, Metron, Google Books — search terms only), public authorities under a valid legal order, and a successor in case of corporate reorganisation.',
         ],
       },
       {
@@ -632,7 +632,7 @@ const en: Record<LegalKind, LegalDoc> = {
       {
         h: '7. Intellectual property',
         p: [
-          `The ${S} brand, logo, layout, code and editorial texts belong to ${E} or its licensors. Third-party images are used under compatible licences or for journalistic purposes, with credits. Catalogue data is provided by TMDB, IGDB and AniList. This product uses the TMDB API but is not endorsed or certified by TMDB.`,
+          `The ${S} brand, logo, layout, code and editorial texts belong to ${E} or its licensors. Third-party images are used under compatible licences or for journalistic purposes, with credits. Catalogue data is provided by TMDB, IGDB, AniList, Metron and Google Books. This product uses the TMDB API but is not endorsed or certified by TMDB.`,
         ],
       },
       {
@@ -855,7 +855,7 @@ const es: Record<LegalKind, LegalDoc> = {
       {
         h: '6. Propiedad intelectual',
         p: [
-          `Marca, código y textos pertenecen a ${E}. Datos de catálogo de TMDB, IGDB y AniList. Este producto usa la API de TMDB pero no está respaldado por TMDB.`,
+          `Marca, código y textos pertenecen a ${E}. Datos de catálogo de TMDB, IGDB, AniList, Metron y Google Books. Este producto usa la API de TMDB pero no está respaldado por TMDB.`,
         ],
       },
       {

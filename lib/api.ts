@@ -134,6 +134,22 @@ async function errorInfo(res: Response): Promise<{ message: string; code?: strin
   }
 }
 
+/**
+ * Mensagem para o visitante: clara, sem termos técnicos. Detalhes ficam no log da API
+ * (o "ID" no final ajuda o suporte a achar o erro).
+ */
+function friendlyMessage(status: number, code: string | undefined, message: string) {
+  const id = message.match(/ · ID [\w-]+$/)?.[0] || '';
+  if (status === 401) return 'Sua sessão expirou. Entre novamente para continuar.';
+  if (status === 429) return 'Muitas tentativas em pouco tempo. Aguarde um minuto e tente de novo.';
+  if (code === 'ROUTE_NOT_FOUND') return 'Este recurso está indisponível no momento. Tente novamente mais tarde.';
+  if (code === 'DB_SCHEMA_OUTDATED') return `Este recurso está temporariamente indisponível. Tente novamente mais tarde.${id}`;
+  if (code === 'API_GATEWAY_UNAVAILABLE' || status === 502 || status === 503 || status === 504)
+    return 'O Hypeverso está passando por uma instabilidade rápida. Tente novamente em alguns segundos.';
+  if (status >= 500) return `Algo deu errado do nosso lado. Tente novamente em instantes.${id}`;
+  return message;
+}
+
 function formatError(j: any, status: number) {
   {
     const requestId = j?.requestId ? ` · ID ${j.requestId}` : '';
@@ -197,7 +213,7 @@ export async function api<T = any>(path: string, init: RequestInit = {}, retry =
   }
   if (!res.ok) {
     const info = await errorInfo(res);
-    throw new ApiError(info.message, res.status, info.code);
+    throw new ApiError(friendlyMessage(res.status, info.code, info.message), res.status, info.code);
   }
   if (res.status === 204) return undefined as T;
   const contentType = res.headers.get('content-type') || '';

@@ -10,7 +10,7 @@ import { Button, Card } from '@/ui';
 
 type MediaType = 'MOVIE' | 'SERIES' | 'GAME' | 'ANIME' | 'MANGA' | 'COMIC';
 type ReleaseItem = {
-  provider: 'TMDB' | 'IGDB' | 'ANILIST';
+  provider: 'TMDB' | 'IGDB' | 'ANILIST' | 'METRON' | 'GOOGLE_BOOKS';
   externalId: string;
   mediaType: MediaType;
   title: string;
