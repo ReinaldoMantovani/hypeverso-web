@@ -40,7 +40,8 @@ export default function Library() {
         return { ok: false, message: e?.message || 'Moderador iniciando' };
       }
     },
-    refetchInterval: 10000,
+    // Só fica conferindo enquanto o moderador não estiver pronto.
+    refetchInterval: q => (q.state.data?.ok ? false : 30000),
     staleTime: 5000,
   });
 
